@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | The Indian Garden Nursery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #f3f3f3; }
+        .cart-page { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .cart-header { margin-bottom: 30px; }
+        .cart-header h1 { font-family: 'Outfit', sans-serif; font-size: 2rem; color: var(--primary); }
+        .cart-header p { color: var(--text-muted); }
+        .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 30px; align-items: start; }
+
+        /* Cart Items */
+        .cart-items-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; }
+        .cart-items-head { padding: 20px 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items-head h3 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: var(--text-dark); }
+        .cart-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 15px; align-items: center; padding: 20px 25px; border-bottom: 1px solid #f0f0f0; }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item img { width: 90px; height: 90px; object-fit: cover; border-radius: 8px; }
+        .cart-item-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text-dark); margin-bottom: 4px; }
+        .cart-item-price { color: var(--primary); font-weight: 800; font-size: 1.05rem; margin-bottom: 10px; }
+        .qty-control { display: flex; align-items: center; gap: 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; width: fit-content; }
+        .qty-btn { background: #f5f5f5; border: none; width: 34px; height: 34px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .qty-btn:hover { background: var(--primary); color: #fff; }
+        .qty-num { width: 44px; height: 34px; text-align: center; border: none; border-left: 1px solid #ddd; border-right: 1px solid #ddd; font-size: 0.95rem; font-weight: 600; outline: none; }
+        .remove-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.2rem; padding: 5px; transition: color 0.2s; }
+        .remove-btn:hover { color: #e53935; }
+        .cart-item-subtotal { text-align: right; font-weight: 700; font-size: 1.05rem; color: var(--text-dark); }
+
+        /* Empty Cart */
+        .cart-empty { text-align: center; padding: 80px 30px; }
+        .cart-empty i { font-size: 5rem; color: #ddd; display: block; margin-bottom: 20px; }
+        .cart-empty h2 { color: var(--text-muted); margin-bottom: 10px; }
+        .cart-empty p { color: #aaa; margin-bottom: 25px; }
+
+        /* Order Summary */
+        .order-summary { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 25px; position: sticky; top: 20px; }
+        .order-summary h3 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted); }
+        .summary-row.total { font-weight: 800; font-size: 1.15rem; color: var(--text-dark); padding-top: 15px; border-top: 2px solid #eee; margin-top: 10px; }
+        .savings-badge { background: #e8f5e9; color: #2e7d32; padding: 10px 15px; border-radius: 8px; font-size: 0.88rem; font-weight: 600; margin: 15px 0; text-align: center; }
+        .checkout-btn { display: block; width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; margin-bottom: 10px; transition: all 0.3s; }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(11,93,59,0.3); }
+        .wa-order-btn { display: block; width: 100%; padding: 13px; background: #25D366; color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; text-align: center; text-decoration: none; transition: background 0.2s; }
+        .wa-order-btn:hover { background: #1eb956; }
+        .continue-link { display: block; text-align: center; margin-top: 15px; color: var(--primary); font-size: 0.9rem; font-weight: 600; }
+        .continue-link:hover { color: var(--primary-light); }
+
+        /* Promo Code */
+        .promo-row { display: flex; gap: 8px; margin: 15px 0; }
+        .promo-input { flex: 1; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; outline: none; font-family: 'Inter', sans-serif; }
+        .promo-btn { padding: 10px 18px; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+
+        /* Bulk CTA Banner */
+        .bulk-banner { background: linear-gradient(135deg, var(--primary), #1a7a50); color: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px; display: flex; align-items: center; gap: 20px; }
+        .bulk-banner i { font-size: 2.5rem; opacity: 0.8; flex-shrink: 0; }
+        .bulk-banner h4 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 5px; }
+        .bulk-banner p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 12px; }
+        .bulk-banner a { background: #fff; color: var(--primary); padding: 8px 18px; border-radius: 6px; font-weight: 700; font-size: 0.88rem; text-decoration: none; }
+
+        @media (max-width:900px) { .cart-layout { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-bar-info">
+                <span><i class="fas fa-map-marker-alt"></i> Main Branch: Kadiyam Muramunda, Other: Madiki, Tokada, Chemudulanka, Narendrapatnam(Jaggampeta)</span>
+            </div>
+            <div class="top-bar-social">
+                <a href="https://www.facebook.com/share/192QqnNqdF/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/ours_kadiyam_nurseries?igsh=aXgwczh5a3B5aHpj" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/919885533297" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="scrolled">
+        <div class="nav-inner">
+            <div class="logo">
+                <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+                    <img src="logo.png" alt="The Indian Garden Nursery Logo">
+                    <div class="logo-text">
+                        <span>The Indian Garden Nursery</span>
+                        <span>Direct from Farm</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#inventory">Shop Plants</a></li>
+                <li><a href="bulk-order.html"><i class="fas fa-boxes"></i> Bulk Order</a></li>
+                <li><a href="cart.html" style="color:var(--primary); font-weight:700; position:relative;"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" style="position:absolute;top:-8px;right:-12px;background:var(--primary-light);color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.7rem;display:none;align-items:center;justify-content:center;font-weight:700;">0</span></a></li>
+                <li><a href="tel:+919885533297" class="nav-phone"><i class="fas fa-phone-alt"></i> <span>Call Us</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="cart-page">
+        <!-- Bulk Order Banner -->
+        <div class="bulk-banner">
+            <i class="fas fa-truck"></i>
+            <div>
+                <h4>Need Large Quantity? Get Wholesale Prices!</h4>
+                <p>Order 50+ plants and get upto 40% extra discount. Perfect for landscapers, builders and farm owners.</p>
+                <a href="bulk-order.html">Place Bulk Order →</a>
+            </div>
+        </div>
+
+        <div class="cart-header">
+            <h1><i class="fas fa-shopping-cart"></i> Your Cart</h1>
+            <p id="cartHeaderCount">Loading your items...</p>
+        </div>
+
+        <div class="cart-layout">
+            <!-- Items -->
+            <div>
+                <div class="cart-items-box" id="cartBox">
+                    <div class="cart-items-head">
+                        <h3>Cart Items</h3>
+                        <button onclick="clearAll()" style="background:none;border:none;color:#e53935;cursor:pointer;font-size:0.88rem;font-weight:600;"><i class="fas fa-trash"></i> Clear All</button>
+                    </div>
+                    <div id="cartItemsList"></div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div>
+                <div class="order-summary">
+                    <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                    <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">₹0</span></div>
+                    <div class="summary-row"><span>You Save</span><span id="sumSavings" style="color:#2e7d32;font-weight:700;">₹0</span></div>
+                    <div class="summary-row"><span>Delivery Charges</span><span id="sumDelivery">₹49</span></div>
+                    <div class="summary-row total"><span>Total</span><span id="sumTotal">₹49</span></div>
+                    <div class="savings-badge" id="savingsBadge" style="display:none;">
+                        🎉 You are saving <strong id="savingsAmt">₹0</strong> on this order!
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="promo-row">
+                        <input class="promo-input" type="text" id="promoInput" placeholder="Enter promo code">
+                        <button class="promo-btn" onclick="applyPromo()">Apply</button>
+                    </div>
+                    <p id="promoMsg" style="font-size:0.82rem; color:#2e7d32; margin-bottom:10px; display:none;"></p>
+
+                    <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+                        <i class="fas fa-lock"></i> Proceed to Checkout
+                    </button>
+                    <a class="wa-order-btn" id="waOrderBtn" href="#" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                    </a>
+                    <a class="continue-link" href="index.html#inventory">← Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+    <script>
+        let promoDiscount = 0;
+
+        function renderCart() {
+            const cart = Cart.getCart();
+            const list = document.getElementById('cartItemsList');
+            const header = document.getElementById('cartHeaderCount');
+
+            if (cart.length === 0) {
+                document.getElementById('cartBox').innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Your cart is empty</h2>
+                        <p>Add some beautiful plants to get started!</p>
+                        <a href="index.html#inventory" class="btn btn-primary">Browse Plants</a>
+                    </div>`;
+                updateSummary([]);
+                header.textContent = '0 items in your cart';
+                return;
+            }
+
+            const count = cart.reduce((s,i) => s + i.qty, 0);
+            header.textContent = `${count} item${count !== 1 ? 's' : ''} in your cart`;
+
+            list.innerHTML = cart.map(item => `
+                <div class="cart-item" id="item-${item.id}">
+                    <img src="${item.img}" alt="${item.name}" onerror="this.src='logo.jpg'">
+                    <div>
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">₹${item.price} / plant</div>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('${item.id}', -1)"><i class="fas fa-minus"></i></button>
+                            <input class="qty-num" type="number" value="${item.qty}" min="1" onchange="setQty('${item.id}', this.value)">
+                            <button class="qty-btn" onclick="changeQty('${item.id}', 1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <button class="remove-btn" onclick="removeItem('${item.id}')"><i class="fas fa-times"></i></button>
+                        <div class="cart-item-subtotal" style="margin-top:35px;">₹${item.price * item.qty}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateSummary(cart);
+            buildWaLink(cart);
+        }
+
+        function updateSummary(cart) {
+            const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+            // Estimated MRP savings (assume ~35% discount on avg)
+            const mrpEst = Math.round(subtotal * 1.4);
+            const savings = mrpEst - subtotal + promoDiscount;
+            const delivery = subtotal > 999 ? 0 : 49;
+            const total = subtotal - promoDiscount + delivery;
+
+            document.getElementById('sumSubtotal').textContent = `₹${subtotal}`;
+            document.getElementById('sumSavings').textContent = `−₹${savings}`;
+            document.getElementById('sumDelivery').textContent = delivery === 0 ? 'FREE 🎉' : `₹${delivery}`;
+            document.getElementById('sumTotal').textContent = `₹${Math.max(0, total)}`;
+
+            const badge = document.getElementById('savingsBadge');
+            if (savings > 0 && subtotal > 0) {
+                badge.style.display = 'block';
+                document.getElementById('savingsAmt').textContent = `₹${savings}`;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function buildWaLink(cart) {
+            const lines = cart.map(i => `• ${i.name} x${i.qty} = ₹${i.price * i.qty}`).join('%0A');
+            const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+            const msg = `Hello The Indian Garden Nursery!%0A%0AI want to place an order:%0A${lines}%0A%0ATotal: ₹${total}%0A%0APlease confirm availability.`;
+            document.getElementById('waOrderBtn').href = `https://wa.me/919885533297?text=${msg}`;
+        }
+
+        function changeQty(id, delta) {
+            const cart = Cart.getCart();
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty = Math.max(1, item.qty + delta);
+                Cart.saveCart(cart);
+                renderCart();
+            }
+        }
+
+        function setQty(id, val) {
+            Cart.updateQty(id, parseInt(val) || 1);
+            renderCart();
+        }
+
+        function removeItem(id) {
+            Cart.removeFromCart(id);
+            renderCart();
+        }
+
+        function clearAll() {
+            if (confirm('Remove all items from cart?')) {
+                Cart.clearCart();
+                renderCart();
+            }
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            const msg = document.getElementById('promoMsg');
+            const codes = { 'NURSERY10': 50, 'KADIYAM20': 100, 'WHOLESALE': 200 };
+            if (codes[code]) {
+                promoDiscount = codes[code];
+                msg.style.display = 'block';
+                msg.textContent = `✅ Promo "${code}" applied! You saved ₹${promoDiscount} extra!`;
+                updateSummary(Cart.getCart());
+            } else {
+                msg.style.display = 'block';
+                msg.style.color = '#e53935';
+                msg.textContent = '❌ Invalid promo code. Try: NURSERY10, KADIYAM20';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+    <!-- FLOATING CONTACT BUTTONS -->
+    <div class="floating-btns">
+        <a href="https://wa.me/919885533297" class="float-btn btn-whatsapp" title="WhatsApp Order" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+919885533297" class="float-btn btn-call" title="Call Us (+91 98855 33297)"><i class="fas fa-phone-alt"></i></a>
+    </div>
+
+</body>
+</html>

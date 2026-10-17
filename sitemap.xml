@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://indiangardennursery.com/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://indiangardennursery.com/nursery-signboard-new.jpg</image:loc>
+      <image:title>Indian Garden Nursery Kadiyam — Largest Plant Nursery in Andhra Pradesh</image:title>
+    </image:image>
+  </url>
+
+  <!-- Avenue Trees -->
+  <url>
+    <loc>https://indiangardennursery.com/avenue.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://indiangardennursery.com/teak-tree.jpg</image:loc>
+      <image:title>Buy Avenue Trees Kadiyam — Teak, Mahogany, Neem Wholesale</image:title>
+    </image:image>
+  </url>
+
+  <!-- Fruit Plants -->
+  <url>
+    <loc>https://indiangardennursery.com/fruit.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://indiangardennursery.com/guava-plant.jpg</image:loc>
+      <image:title>Buy Fruit Plants Online Kadiyam — Mango, Guava, Lemon Trees</image:title>
+    </image:image>
+  </url>
+
+  <!-- Indoor Plants -->
+  <url>
+    <loc>https://indiangardennursery.com/indoor.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://indiangardennursery.com/snake-plant.jpg</image:loc>
+      <image:title>Buy Indoor Plants Online Andhra Pradesh — Snake Plant, Peace Lily</image:title>
+    </image:image>
+  </url>
+
+  <!-- Outdoor Plants -->
+  <url>
+    <loc>https://indiangardennursery.com/outdoor.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Ornamental Plants -->
+  <url>
+    <loc>https://indiangardennursery.com/ornamental.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Bulk Orders -->
+  <url>
+    <loc>https://indiangardennursery.com/bulk-order.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Cart -->
+  <url>
+    <loc>https://indiangardennursery.com/cart.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://indiangardennursery.com/privacy.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Checkout -->
+  <url>
+    <loc>https://indiangardennursery.com/checkout.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>

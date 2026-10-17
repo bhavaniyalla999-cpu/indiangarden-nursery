@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | The Indian Garden Nursery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #f3f3f3; }
+        .checkout-page { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .checkout-header { margin-bottom: 30px; }
+        .checkout-header h1 { font-family: 'Outfit', sans-serif; font-size: 2rem; color: var(--primary); }
+        .checkout-layout { display: grid; grid-template-columns: 1fr 400px; gap: 30px; align-items: start; }
+        
+        .form-section { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 30px; margin-bottom: 20px; }
+        .form-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; outline: none; transition: border 0.3s; box-sizing: border-box;}
+        .form-control:focus { border-color: var(--primary); }
+        
+        .radio-group { display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: border 0.2s; }
+        .radio-group:hover { border-color: var(--primary); }
+        .radio-group input { transform: scale(1.2); accent-color: var(--primary); }
+        
+        .summary-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 25px; position: sticky; top: 20px; }
+        .summary-box h3 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .summary-item { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; }
+        .summary-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .summary-item-details { flex: 1; }
+        .summary-item-name { font-weight: 700; font-size: 0.95rem; color: var(--text-dark); margin-bottom: 4px; }
+        .summary-item-price { font-size: 0.9rem; color: var(--text-muted); }
+        
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted); }
+        .summary-row.total { font-weight: 800; font-size: 1.15rem; color: var(--text-dark); padding-top: 15px; border-top: 2px solid #eee; margin-top: 10px; }
+        
+        .place-order-btn { display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: #fff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; margin-top: 20px; transition: all 0.3s; }
+        .place-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(11,93,59,0.3); }
+        
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="nav-inner">
+            <div class="logo">
+                <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+                    <img src="logo.png" alt="The Indian Garden Nursery Logo">
+                    <div class="logo-text">
+                        <span>The Indian Garden Nursery</span>
+                        <span>Direct from Farm</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#inventory">Shop Plants</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" style="display:none;">0</span></a></li>
+                <li><a href="tel:+919885533297" class="nav-phone"><i class="fas fa-phone-alt"></i> <span>Call Us</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="checkout-page">
+        <div class="checkout-header">
+            <h1>Secure Checkout</h1>
+        </div>
+        
+        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+            <div class="checkout-layout">
+                <!-- Left Column -->
+                <div>
+                    <div class="form-section">
+                        <h3>1. Delivery Address</h3>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="custName" class="form-control" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="custPhone" class="form-control" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                        </div>
+                        <div class="form-group">
+                            <label>Complete Address</label>
+                            <textarea id="custAddress" class="form-control" rows="3" required placeholder="House No, Building, Street, Area"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>PIN Code</label>
+                            <input type="text" id="custPin" class="form-control" required placeholder="6-digit PIN code" pattern="[0-9]{6}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>2. Payment Method</h3>
+                        <label class="radio-group">
+                            <input type="radio" name="payment" value="COD" checked>
+                            <div>
+                                <div style="font-weight:700;color:var(--text-dark);">Cash on Delivery (COD)</div>
+                                <div style="font-size:0.85rem;color:var(--text-muted);">Pay when your order is delivered</div>
+                            </div>
+                        </label>
+                        <label class="radio-group">
+                            <input type="radio" name="payment" value="UPI">
+                            <div>
+                                <div style="font-weight:700;color:var(--text-dark);">UPI / Online Payment</div>
+                                <div style="font-size:0.85rem;color:var(--text-muted);">Pay securely via GPAY, PhonePe, Paytm</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <div class="summary-box">
+                        <h3>Order Summary</h3>
+                        <div id="checkoutItems"></div>
+                        
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+                            <div class="summary-row"><span>Subtotal</span><span id="cSubtotal">₹0</span></div>
+                            <div class="summary-row"><span>Delivery</span><span id="cDelivery">₹49</span></div>
+                            <div class="summary-row total"><span>Total to Pay</span><span id="cTotal">₹49</span></div>
+                        </div>
+                        
+                        <button type="submit" class="place-order-btn">Place Order Securely <i class="fas fa-check-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="cart.js"></script>
+    <script>
+        let checkoutItems = [];
+        let isBuyNow = false;
+
+        function loadCheckout() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (id) {
+                // Buy Now flow
+                isBuyNow = true;
+                checkoutItems = [{
+                    id: id,
+                    name: decodeURIComponent(urlParams.get('name') || 'Plant'),
+                    price: Number(urlParams.get('price') || 0),
+                    img: urlParams.get('img') || 'logo.jpg',
+                    qty: 1
+                }];
+            } else {
+                // Cart flow
+                checkoutItems = Cart.getCart();
+                if (checkoutItems.length === 0) {
+                    alert('Your cart is empty!');
+                    window.location.href = 'cart.html';
+                    return;
+                }
+            }
+            renderSummary();
+        }
+
+        function renderSummary() {
+            const container = document.getElementById('checkoutItems');
+            container.innerHTML = checkoutItems.map(item => \`
+                <div class="summary-item">
+                    <img src="\${item.img}" alt="\${item.name}" onerror="this.src='logo.jpg'">
+                    <div class="summary-item-details">
+                        <div class="summary-item-name">\${item.name}</div>
+                        <div class="summary-item-price">Qty: \${item.qty} × ₹\${item.price} = <strong>₹\${item.qty * item.price}</strong></div>
+                    </div>
+                </div>
+            \`).join('');
+
+            const subtotal = checkoutItems.reduce((s,i) => s + i.price * i.qty, 0);
+            const delivery = subtotal > 999 ? 0 : 49;
+            const total = subtotal + delivery;
+
+            document.getElementById('cSubtotal').textContent = \`₹\${subtotal}\`;
+            document.getElementById('cDelivery').textContent = delivery === 0 ? 'FREE' : \`₹\${delivery}\`;
+            document.getElementById('cTotal').textContent = \`₹\${total}\`;
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            
+            const address = \`\${document.getElementById('custName').value}, Ph: \${document.getElementById('custPhone').value}, \${document.getElementById('custAddress').value}, PIN: \${document.getElementById('custPin').value}\`;
+            const payment = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (isBuyNow) {
+                const subtotal = checkoutItems.reduce((s,i) => s + i.price * i.qty, 0);
+                const delivery = subtotal > 999 ? 0 : 49;
+                const order = {
+                    id: 'SBN' + Date.now(),
+                    date: new Date().toISOString(),
+                    items: checkoutItems,
+                    total: subtotal + delivery,
+                    delivery: delivery,
+                    address: address,
+                    payment: payment,
+                    status: 0
+                };
+                const orders = JSON.parse(localStorage.getItem('sb_orders') || '[]');
+                orders.unshift(order);
+                localStorage.setItem('sb_orders', JSON.stringify(orders));
+            } else {
+                Cart.placeOrder({ address, payment });
+            }
+            
+            // Redirect to orders page
+            window.location.href = 'orders.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCheckout);
+    </script>
+    <!-- FLOATING CONTACT BUTTONS -->
+    <div class="floating-btns">
+        <a href="https://wa.me/919885533297" class="float-btn btn-whatsapp" title="WhatsApp Order" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+919885533297" class="float-btn btn-call" title="Call Us (+91 98855 33297)"><i class="fas fa-phone-alt"></i></a>
+    </div>
+
+</body>
+</html>
