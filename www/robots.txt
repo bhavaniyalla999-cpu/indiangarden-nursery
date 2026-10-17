@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.indiangardennursery.com/sitemap.xml
+Sitemap: https://indiangardennursery.com/sitemap.xml
